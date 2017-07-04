@@ -27,7 +27,7 @@ defmodule Rumbl.VideoController do
     render(conn, "index.html", videos: videos)
   end
 
-  def new(conn, _params, user) do
+  def new(conn, _params, _user) do
     changeset = conn.assigns.current_user
     |> build_assoc(:videos)
     |> Video.changeset()
@@ -39,8 +39,6 @@ defmodule Rumbl.VideoController do
     changeset = user
     |> build_assoc(:videos)
     |> Video.changeset(video_params)
-
-    Logger.warn("changset #{inspect changeset}")
 
     case Repo.insert(changeset) do
       {:ok, _video} ->
